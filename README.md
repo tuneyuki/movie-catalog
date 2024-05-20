@@ -2,6 +2,8 @@
 
 * Flaskの勉強のために、ChatGPTすべて作らせた
 
+<img src="./sample.png" alt="Sample Screenshot" width="600">
+
 ## ChatGPTでの作成手順
 
 * 認証画面を経由して表示されるランディングページを作成させる
