@@ -1,0 +1,71 @@
+/* static/style_theaters.css */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.theaters-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px; /* サイドバーの幅を固定 */
+  flex-shrink: 0; /* サイドバーの幅が縮まないように設定 */
+  background-color: #343a40;
+  padding: 20px;
+  color: white;
+  box-sizing: border-box; /* padding を含めたボックスサイズを指定 */
+  overflow-y: auto; /* 必要に応じてスクロールを追加 */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0; /* マージンをリセット */
+}
+
+.sidebar ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+.pagination-info {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #fff;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination a {
+  color: white;
+  text-decoration: none;
+  background-color: #007BFF;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.pagination a:hover {
+  background-color: #0056b3;
+}
+
+.theater-details {
+  padding: 20px;
+  flex-grow: 1; /* コンテンツエリアが余ったスペースを占有 */
+  overflow-y: auto; /* 必要に応じてスクロールを追加 */
+}

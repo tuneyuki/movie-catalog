@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Movies{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_movies.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="movies-container">
+    <div class="sidebar">
+        <ul id="movie-list">
+            {% for movie in movies %}
+                <li><a href="#" onclick="loadMovieDetails('{{ movie._id }}')">{{ movie.title }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="pagination-info">
+            Page {{ page }} of {{ total_pages }}
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="{{ url_for('movies.movies', page=page-1) }}">&laquo; Previous</a>
+            {% endif %}
+            {% if page < total_pages %}
+                <a href="{{ url_for('movies.movies', page=page+1) }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="movie-details" id="movie-details">
+        <h2>Movie Details</h2>
+        <p>Select a movie to see the details.</p>
+    </div>
+</div>
+<script>
+    function loadMovieDetails(movieId) {
+        fetch(`/movies/movie/${movieId}`)
+            .then(response => response.json())
+            .then(data => {
+                const detailsDiv = document.getElementById('movie-details');
+                if (data.error) {
+                    detailsDiv.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    detailsDiv.innerHTML = `
+                        <h2>${data.title}</h2>
+                        <img src="${data.poster}" alt="${data.title}" />
+                        <p><strong>Plot:</strong> ${data.plot}</p>
+                        <p><strong>Genres:</strong> ${data.genres.join(', ')}</p>
+                        <p><strong>Runtime:</strong> ${data.runtime} minutes</p>
+                        <p><strong>Cast:</strong> ${data.cast.join(', ')}</p>
+                        <p><strong>Year:</strong> ${data.year}</p>
+                        <p><strong>Director(s):</strong> ${data.directors.join(', ')}</p>
+                        <p><strong>Rating:</strong> ${data.imdb.rating}</p>
+                        <p><strong>Awards:</strong> ${data.awards.text}</p>
+                    `;
+                }
+            });
+    }
+</script>
+{% endblock %}

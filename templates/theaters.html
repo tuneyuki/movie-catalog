@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Theaters{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_theaters.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="theaters-container">
+    <div class="sidebar">
+        <ul id="theater-list">
+            {% for theater in theaters %}
+                <li><a href="#" onclick="loadTheaterDetails('{{ theater._id }}')">Theater ID: {{ theater.theaterId }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="pagination-info">
+            Page {{ page }} of {{ total_pages }}
+        </div>
+        <div class="pagination">
+            {% if page > 1 %}
+                <a href="{{ url_for('theaters.theaters', page=page-1) }}">&laquo; Previous</a>
+            {% endif %}
+            {% if page < total_pages %}
+                <a href="{{ url_for('theaters.theaters', page=page+1) }}">Next &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="theater-details" id="theater-details">
+        <h2>Theater Details</h2>
+        <p>Select a theater to see the details.</p>
+    </div>
+</div>
+<script>
+    function loadTheaterDetails(theaterId) {
+        fetch(`/theaters/theater/${theaterId}`)
+            .then(response => response.json())
+            .then(data => {
+                const detailsDiv = document.getElementById('theater-details');
+                if (data.error) {
+                    detailsDiv.innerHTML = `<p>${data.error}</p>`;
+                } else {
+                    detailsDiv.innerHTML = `
+                        <h2>Theater ID: ${data.theaterId}</h2>
+                        <p><strong>Address:</strong> ${data.location.address.street1}, ${data.location.address.city}, ${data.location.address.state} ${data.location.address.zipcode}</p>
+                        <p><strong>Coordinates:</strong> (${data.location.geo.coordinates[1]}, ${data.location.geo.coordinates[0]})</p>
+                    `;
+                }
+            });
+    }
+</script>
+{% endblock %}

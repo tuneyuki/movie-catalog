@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ current_user.username }}!</h1>
+<div class="dashboard-widgets">
+    <div class="widget">
+        <h2>Current Time</h2>
+        <div id="current-time" class="time-display"></div>
+    </div>
+    <div class="widget">
+        <h2>Widget 1</h2>
+        <p>Some content for the first widget.</p>
+    </div>
+    <div class="widget">
+        <h2>Widget 2</h2>
+        <p>Some content for the second widget.</p>
+    </div>
+    <div class="widget">
+        <h2>Widget 3</h2>
+        <p>Some content for the third widget.</p>
+    </div>
+</div>
+<script>
+    function updateTime() {
+        var now = new Date();
+        var hours = String(now.getHours()).padStart(2, '0');
+        var minutes = String(now.getMinutes()).padStart(2, '0');
+        var seconds = String(now.getSeconds()).padStart(2, '0');
+        var formattedTime = hours + ':' + minutes + ':' + seconds;
+        document.getElementById('current-time').textContent = formattedTime;
+    }
+    setInterval(updateTime, 1000); // Update time every second
+    updateTime(); // Initial call to display time immediately
+</script>
+{% endblock %}
